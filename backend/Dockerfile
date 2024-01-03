@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y git zip ffmpeg libsm6 libxext6 git ninj
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir -r requirements.txt
+
+RUN pip install --no-cache-dir --default-timeout=100 -r requirements.txt
 
 # Copy the rest of the application code to the container
 COPY backend/ ./
@@ -35,4 +36,4 @@ COPY backend/ ./
 EXPOSE 8081
 
 # Start FastAPI using uvicorn with GPU support
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8081", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8081", "--reload"]

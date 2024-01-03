@@ -16,7 +16,7 @@ import elasticsearch
 from elasticsearch.helpers import bulk
 
 # Create an Elasticsearch client instance
-es = Elasticsearch([{'host': '192.168.20.156', 'port': 9200}])
+es = Elasticsearch([{'host': '127.0.0.1', 'port': 9200}])
 
 class VideoData(BaseModel):
     description: str   
@@ -37,9 +37,9 @@ class LogMessage(BaseModel):
 app = FastAPI()
 
 app.mount("/data", StaticFiles(directory="data"))
-app.mount("/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-1/keyframes/", StaticFiles(directory="/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-1/keyframes/"))
-app.mount("/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-2/keyframes/", StaticFiles(directory="/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-2/keyframes/"))
-app.mount("/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-3/keyframes/", StaticFiles(directory="/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-3/keyframes/"))
+# app.mount("/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-1/keyframes/", StaticFiles(directory="/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-1/keyframes/"))
+# app.mount("/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-2/keyframes/", StaticFiles(directory="/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-2/keyframes/"))
+# app.mount("/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-3/keyframes/", StaticFiles(directory="/mlcv1/Datasets/HCM_AIChallenge/HCM_AIC_2023/data-batch-3/keyframes/"))
 
 # origins = ["http://192.168.20.164:8080"]
 
@@ -59,8 +59,8 @@ with open('./data/keyframe.json') as file:
 clip_feature = np.load("./data/clip-feature.npy")
 hist_feature = np.load("./data/hist-feature.npy")
 
-with open('./data/merge_3batch.json', 'r', encoding='utf-8') as obj:
-    object_list = json.load(obj)
+# with open('./data/merge_3batch.json', 'r', encoding='utf-8') as obj:
+#     object_list = json.load(obj)
 
 MODELS = load_model(clip_feature, hist_feature)
 
@@ -174,20 +174,20 @@ async def find_nearest_video_by_keyframe(keyframe_with_location):
  
 
 
-@app.post("/api/object/")
-async def objectsearch(objectData:ObjectSearch):
-    checker = objectData.obj
-    result_dict = []
-    for ob in objectData.listv:
-        path_json = ob['path'].replace('.jpg','.json').replace('keyframes','objects')
-        videoid = ob['video']
-        # if objec_list['video'][]
-        objs_checker = object_list[videoid][path_json]
-        for ck in checker:
-            if ck in objs_checker:
-                result_dict.append(ob)
+# @app.post("/api/object/")
+# async def objectsearch(objectData:ObjectSearch):
+#     checker = objectData.obj
+#     result_dict = []
+#     for ob in objectData.listv:
+#         path_json = ob['path'].replace('.jpg','.json').replace('keyframes','objects')
+#         videoid = ob['video']
+#         # if objec_list['video'][]
+#         objs_checker = object_list[videoid][path_json]
+#         for ck in checker:
+#             if ck in objs_checker:
+#                 result_dict.append(ob)
 
-    return result_dict
+#     return result_dict
 
 
 
