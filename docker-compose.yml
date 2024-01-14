@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
     ports:
-      - "8000:8000"
+      - "8080:8080"
     volumes:
       - ./frontend/src:/app/src
     depends_on:
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "8123:8123"
+      - "8090:8090"
     volumes:
       - ./backend:/app
 
