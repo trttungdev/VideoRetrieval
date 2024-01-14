@@ -2,57 +2,32 @@ version: "3"
 
 services:
   frontend:
-    platform: linux/amd64  # Specify the platform
     build:
       context: .
       dockerfile: frontend/Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./frontend/src:/app/src
+      - ./frontend/src:/app/frontend/src  # Adjusted the volume mapping
     depends_on:
       - backend
 
   backend:
-    platform: linux/amd64  # Specify the platform
     build:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "8123:8123"
+      - "8080:8080"
     volumes:
-      - ./backend:/app
-
-# -------------------------------
-# version: "3"
-# services:
-#   frontend:
-#     build:
-#       context: .
-#       dockerfile: frontend/Dockerfile
-#     ports:
-#       - "8000:8000"
-#     volumes:
-#       - ./frontend/src:/app/src
-#     depends_on:
-#      - backend
-
-#   backend:
-#     build:
-#       context: .
-#       dockerfile: backend/Dockerfile
-#     ports:
-#       - "8123:8123"
-#     volumes:
-#       - ./backend:/app
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           device_ids: ['0']  # Use only GPU 0
-    #           capabilities: [gpu]
-
-    # environment:
-    #   - NVIDIA_VISIBLE_DEVICES=0  # Only use GPU 0
-    #   - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - ./backend:/app/backend  # Adjusted the volume mapping
+      - /mlcv1:/mlcv1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['0']
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility

@@ -32,8 +32,8 @@ RUN pip install --no-cache-dir --default-timeout=100 -r requirements.txt
 # Copy the rest of the application code to the container
 COPY backend/ ./
 
-# Expose port 8081 for the backend
-EXPOSE 8081
+# Expose port 8080 for the backend
+EXPOSE 8080
 
 # Start FastAPI using uvicorn with GPU support
-CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8081", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8080", "--reload"]

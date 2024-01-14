@@ -12,4 +12,5 @@ wget
 librosa
 elasticsearch==7.9.1
 retrying
+pyngrok
 git+https://github.com/openai/CLIP.git
