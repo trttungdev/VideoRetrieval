@@ -17,7 +17,11 @@ COPY frontend/public ./public
 # Build the frontend app
 # RUN npm run build
 
+<<<<<<< HEAD
 # Expose port 8080 for the frontend
+=======
+# Expose port 8000 for the frontend
+>>>>>>> 8682722311c29b33d7da6f2fe56e26980e39c9f1
 EXPOSE 8000
 
 # Start the React app
